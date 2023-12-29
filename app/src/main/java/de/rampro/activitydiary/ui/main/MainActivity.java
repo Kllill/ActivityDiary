@@ -212,6 +212,9 @@ public class MainActivity extends BaseActivity implements
                         }else if(clickNum==2){
                             Log.d("btn listener:", "btn is doubleClicked!");
                             Intent intent = new Intent(MainActivity.this, FocusActivity.class);
+                            if(viewModel.currentActivity().getValue() != null) {
+                                intent.putExtra("activityID", viewModel.currentActivity().getValue().getId());
+                            }
                             startActivity(intent);
                         }
                         //防止handler引起的内存泄漏
@@ -252,6 +255,7 @@ public class MainActivity extends BaseActivity implements
         fabNoteEdit = (FloatingActionButton) findViewById(R.id.fab_edit_note);
         fabAttachPicture = (FloatingActionButton) findViewById(R.id.fab_attach_picture);
 
+        //添加便签
         fabNoteEdit.setOnClickListener(v -> {
             // Handle the click on the FAB
             if(viewModel.currentActivity().getValue() != null) {
@@ -263,6 +267,7 @@ public class MainActivity extends BaseActivity implements
             }
         });
 
+        //拍照
         fabAttachPicture.setOnClickListener(v -> {
             // Handle the click on the FAB
             if(viewModel.currentActivity() != null) {

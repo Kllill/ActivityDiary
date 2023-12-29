@@ -117,7 +117,7 @@ public class EditActivity extends BaseActivity implements ActivityHelper.DataCha
                     if (cursor.moveToFirst()) {
                         LinkedList<String> similarNames = new LinkedList<>();
                         do {
-                            String name = cursor.getString(cursor.getColumnIndex(ActivityDiaryContract.DiaryActivity.NAME));
+                            @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(ActivityDiaryContract.DiaryActivity.NAME));
                             double metric = mJaroWinkler.similarity(mActivityName.getText().toString(), name);
                             if (metric >= 1.0) {
                                 checkConstraints();

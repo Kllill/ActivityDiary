@@ -200,6 +200,7 @@ public class ActivityHelper extends AsyncQueryHandler{
             Log.w(TAG, "RefreshJob not scheduled");
         }
 // TODO: do we need to keep track on the scheduled jobs, or is a waiting job with the same ID as a new one automatically canceled?
+//  我们需要跟踪计划的作业吗？还是与新作业ID相同的等待作业会自动取消？
     }
 
     public ArrayList<DiaryActivity> sortedActivities(String query) {
