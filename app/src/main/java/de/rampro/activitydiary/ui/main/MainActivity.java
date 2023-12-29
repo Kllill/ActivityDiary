@@ -111,9 +111,9 @@ public class MainActivity extends BaseActivity implements
     private static final int QUERY_CURRENT_ACTIVITY_STATS = 1;
     private static final int QUERY_CURRENT_ACTIVITY_TOTAL = 2;
 
-    private DetailViewModel viewModel;
+    private DetailViewModel viewModel;  //
 
-    private String mCurrentPhotoPath;
+    private String mCurrentPhotoPath;   //保存照片路径
 
     private RecyclerView selectRecyclerView;
     private StaggeredGridLayoutManager selectorLayoutManager;
@@ -184,7 +184,7 @@ public class MainActivity extends BaseActivity implements
 
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager); //将 TabLayout 和 ViewPager 关联起来，以便它们能够同步工作
 
         selectRecyclerView = findViewById(R.id.select_recycler);
 
@@ -209,7 +209,7 @@ public class MainActivity extends BaseActivity implements
                                 // no diaryEntryID will edit the last one
                                 startActivity(i);
                             }
-                        }else if(clickNum==2){
+                        }else if(clickNum==2){//双击进入专注页面，并传入当前activityID
                             Log.d("btn listener:", "btn is doubleClicked!");
                             Intent intent = new Intent(MainActivity.this, FocusActivity.class);
                             if(viewModel.currentActivity().getValue() != null) {

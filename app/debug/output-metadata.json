@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "de.rampro.activitydiary.debug",
+  "variantName": "debug",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 137,
+      "versionName": "1.4.3-debug",
+      "outputFile": "ActivityDiary-1.4.3-debug.apk"
+    }
+  ],
+  "elementType": "File"
+}
