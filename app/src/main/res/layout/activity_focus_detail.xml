@@ -33,10 +33,59 @@
         tools:layout_editor_absoluteY="1dp"
         tools:ignore="MissingConstraints">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="ActivityName" />
+
+        </LinearLayout>
+
+
+
+
+
+        <EditText
+            android:id="@+id/editTextNote"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Enter your note here"
+            android:layout_margin="20dp"/>
+
+        <de.rampro.activitydiary.model.ClockView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:id="@+id/clockview"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_attach_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="90dp"
+            android:layout_marginRight="90dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_add_image"
+            android:visibility="visible"
+            app:fabSize="normal"
+            tools:ignore="SpeakableTextPresentCheck"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
