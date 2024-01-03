@@ -1,5 +1,5 @@
 # 专注页面功能
-![Uploading ui.png…]()
+![ui](https://github.com/Kllill/ActivityDiary/assets/131448269/bd391be4-c5a9-4882-bda0-985818665bc9)
 
 ## 具体功能
 ### 1、添加note笔记
