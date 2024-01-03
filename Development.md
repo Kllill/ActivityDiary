@@ -1,5 +1,6 @@
 # 专注页面功能
-![8462702ae1d9728ea70d3a99bc651c6](https://github.com/Kllill/ActivityDiary/assets/131448269/d9ecead0-5d98-464a-9dab-07fbeeb5b9aa)
+![Uploading ui.png…]()
+
 ## 具体功能
 ### 1、添加note笔记
 可以随时添加活动笔记，记录心情或正在做的活动
