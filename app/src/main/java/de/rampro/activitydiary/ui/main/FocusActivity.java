@@ -19,10 +19,13 @@
 
 package de.rampro.activitydiary.ui.main;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
@@ -45,6 +48,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 
@@ -58,6 +63,7 @@ import java.util.TimerTask;
 import de.rampro.activitydiary.ActivityDiaryApplication;
 import de.rampro.activitydiary.R;
 import de.rampro.activitydiary.helpers.ActivityHelper;
+import de.rampro.activitydiary.helpers.SharedPreferencesUtils;
 import de.rampro.activitydiary.model.DetailViewModel;
 import de.rampro.activitydiary.model.DiaryActivity;
 import de.rampro.activitydiary.model.TimeUtil;
@@ -65,6 +71,7 @@ import de.rampro.activitydiary.ui.history.HistoryDetailActivity;
 import de.rampro.activitydiary.ui.settings.SettingsActivity;
 
 public class FocusActivity extends HdActivity {
+    private final int IMAGE_REQUEST_CODE = 2000;
 
     private DiaryActivity currentActivity;
     private DetailViewModel viewModel;
@@ -295,7 +302,14 @@ public class FocusActivity extends HdActivity {
         buttonAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getImageLauncher.launch("image/*");
+              //  getImageLauncher.launch("image/*");
+                if (ContextCompat.checkSelfPermission(FocusActivity.this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(FocusActivity.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                } else {
+                    selectFromAlbum();
+                }
             }
         });
 
@@ -350,6 +364,39 @@ public class FocusActivity extends HdActivity {
         hm = new HashMap<Integer, Integer>();//创建HashMap对象
         //加载声音文件，并且设置为1号声音放入hm中
         hm.put(1, sp.load(this, R.raw.piano, 1));
+    }
+
+    private void selectFromAlbum() {
+        Log.e("dashboard fragment","click img_profile:");
+
+        Intent intent2 = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent2, IMAGE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent data) {
+        if (resultCode == RESULT_OK) {
+            final Intent intent = data;
+            switch (requestCode) {
+                case IMAGE_REQUEST_CODE:
+                    Uri selectedImage = intent.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(selectedImage,
+                            filePathColumn, null, null, null);//从系统表中查询指定Uri对应的照片
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String path = cursor.getString(columnIndex);
+                    cursor.close();
+                    Log.e("onActivityResult","path:"+path);
+                    SharedPreferencesUtils helper = new SharedPreferencesUtils(this, "picture");
+                    helper.putValues(new SharedPreferencesUtils.ContentValue("pic"+1,path));
+                    break;
+            }
+        } else {
+            Toast.makeText(this, "canceled", Toast.LENGTH_SHORT).show();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

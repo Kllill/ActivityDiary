@@ -29,12 +29,22 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.rampro.activitydiary.R;
 import de.rampro.activitydiary.db.ActivityDiaryContract;
+import de.rampro.activitydiary.helpers.PicListAdapter;
+import de.rampro.activitydiary.helpers.SharedPreferencesUtils;
 import de.rampro.activitydiary.model.DetailViewModel;
 import de.rampro.activitydiary.ui.generic.DetailRecyclerViewAdapter;
 
@@ -44,7 +54,7 @@ public class DetailPictureFragement extends Fragment implements LoaderManager.Lo
             ActivityDiaryContract.DiaryImage._ID
     };
 
-    private RecyclerView detailRecyclerView;
+    private ListView detailRecyclerView;
     private DetailRecyclerViewAdapter detailAdapter;
     private DetailViewModel viewModel;
 
@@ -60,14 +70,21 @@ public class DetailPictureFragement extends Fragment implements LoaderManager.Lo
 
         StaggeredGridLayoutManager detailLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
-        detailRecyclerView.setLayoutManager(detailLayoutManager);
+        //detailRecyclerView.setLayoutManager(detailLayoutManager);
+        SharedPreferencesUtils helper = new SharedPreferencesUtils(getActivity(), "picture");
+        String path = helper.getString("pic"+1);
+        Log.e("onCreateView","path:"+path);
+        List<String> list=new ArrayList<>();
+        list.add(path);
+        PicListAdapter detailAdapter= new PicListAdapter(list,getActivity());
 
 // TODO:check        detailRecyclerView.setNestedScrollingEnabled(true);
-        detailAdapter = new DetailRecyclerViewAdapter(getActivity(),
-                null);
+//        detailAdapter = new DetailRecyclerViewAdapter(getActivity(),
+//                cursor);
+
         detailRecyclerView.setAdapter(detailAdapter);
 
-        reload();
+      //  reload();
         return view;
     }
 
